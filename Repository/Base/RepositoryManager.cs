@@ -8,9 +8,9 @@ namespace Repositories.Concretes.Base;
 public sealed class RepositoryManager(AppDbContext context) : IRepositoryManager
 {
 
-    private readonly Lazy<ICategoryRepository> _category = new(() => new CategoryRepository(context));
-    private readonly Lazy<ISubCategoryRepository> _subCategory = new(() => new SubCategoryRepository(context));
+    private readonly Lazy<IBookingRepository> _booking = new(() => new BookingRepository(context));
+    private readonly Lazy<IStudioRepository> _studio = new(() => new StudioRepository(context));
 
-    public ICategoryRepository Category => _category.Value;
-    public ISubCategoryRepository SubCategory => _subCategory.Value;
+    public IBookingRepository Booking => _booking.Value;
+    public IStudioRepository Studio => _studio.Value;
 }

@@ -1,0 +1,729 @@
+﻿-- Start a transaction for atomicity
+BEGIN TRANSACTION;
+
+-- Declare variables to hold the last inserted IDs for chaining
+DECLARE @lastCoordinatesId INT;
+DECLARE @lastAvailabilityId INT;
+DECLARE @lastContactId INT;
+DECLARE @lastLocationId INT;
+DECLARE @lastStudioId INT; -- Although not directly used for foreign keys in this script, good practice to declare
+
+-- Insert Data for Studio 1: Dhanmondi Recording Studio 1
+-- Coordinates
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude])
+VALUES (23.716008, 90.410068);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY(); -- Captures the last inserted IDENTITY value in the current scope
+
+-- Availability
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime])
+VALUES ('09:00:00', '18:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+
+-- Contact
+INSERT INTO [dbo].[Contact] ([Phone], [Email])
+VALUES ('+8801768421018', 'studio1@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+
+-- Location
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId])
+VALUES ('Dhaka', 'Gulshan', 'House 73, Road 9, Mohammadpur, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+
+-- Studio
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Dhanmondi Recording Studio 1',
+    'Photography',
+    'A popular Recording Studio studio in Gulshan area.',
+    1525,
+    'BDT',
+    4.0,
+    '["Instruments", "Lighting Equipment", "Wi-Fi"]',
+    '["https://example.com/images/studio1_1.jpg", "https://example.com/images/studio1_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+
+---
+-- Insert Data for Studio 2: Bashundhara Photography 2
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.793419, 90.494277);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('11:00:00', '21:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801619267658', 'studio2@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Gulshan', 'House 70, Road 9, Bashundhara, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Bashundhara Photography 2',
+    'Recording Studio',
+    'A popular Rehearsal Space studio in Dhanmondi area.',
+    2650,
+    'BDT',
+    4.3,
+    '["Backdrop Options", "Soundproofing", "Changing Room", "Makeup Room", "High-end Microphones"]',
+    '["https://example.com/images/studio2_1.jpg", "https://example.com/images/studio2_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 3: Mirpur Rehearsal Space 3
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.837292, 90.313015);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('08:00:00', '18:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801544532370', 'studio3@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Badda', 'House 37, Road 1, Shyamoli, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Mirpur Rehearsal Space 3',
+    'Recording Studio',
+    'A popular Art Studio studio in Mirpur area.',
+    2216,
+    'BDT',
+    4.2,
+    '["Backdrop Options", "Mixing Console", "Mixing Console", "Backdrop Options", "Props"]',
+    '["https://example.com/images/studio3_1.jpg", "https://example.com/images/studio3_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 4: Uttara Art Studio 4
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.822039, 90.343635);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('11:00:00', '22:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801398939207', 'studio4@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Bashundhara', 'House 69, Road 1, Banani, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Uttara Art Studio 4',
+    'Rehearsal Space',
+    'A popular Photography studio in Uttara area.',
+    1520,
+    'BDT',
+    4.2,
+    '["Backdrop Options", "High-end Microphones", "Soundproofing", "Changing Room", "Changing Room"]',
+    '["https://example.com/images/studio4_1.jpg", "https://example.com/images/studio4_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 5: Uttara Recording Studio 5
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.757238, 90.385777);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('09:00:00', '21:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801731198419', 'studio5@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Bashundhara', 'House 10, Road 7, Uttara, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Uttara Recording Studio 5',
+    'Recording Studio',
+    'A popular Recording Studio studio in Bashundhara area.',
+    2779,
+    'BDT',
+    3.6,
+    '["Backdrop Options", "Mixing Console", "Backdrop Options"]',
+    '["https://example.com/images/studio5_1.jpg", "https://example.com/images/studio5_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 6: Dhanmondi Photography 6
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.843248, 90.340347);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('09:00:00', '19:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801691267900', 'studio6@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Banani', 'House 38, Road 11, Banani, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Dhanmondi Photography 6',
+    'Rehearsal Space',
+    'A popular Rehearsal Space studio in Badda area.',
+    2590,
+    'BDT',
+    3.9,
+    '["Mixing Console", "Makeup Room", "Changing Room", "Backdrop Options", "Instruments"]',
+    '["https://example.com/images/studio6_1.jpg", "https://example.com/images/studio6_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 7: Mirpur Art Studio 7
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.730004, 90.335554);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('08:00:00', '18:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801712152703', 'studio7@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Mohammadpur', 'House 40, Road 20, Mirpur, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Mirpur Art Studio 7',
+    'Photography',
+    'A popular Art Studio studio in Mohammadpur area.',
+    2660,
+    'BDT',
+    4.3,
+    '["Wi-Fi", "Wi-Fi", "Instruments", "Makeup Room"]',
+    '["https://example.com/images/studio7_1.jpg", "https://example.com/images/studio7_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 8: Shyamoli Rehearsal Space 8
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.839512, 90.362663);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('09:00:00', '18:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801362173683', 'studio8@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Shyamoli', 'House 95, Road 11, Shyamoli, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Shyamoli Rehearsal Space 8',
+    'Recording Studio',
+    'A popular Photography studio in Shyamoli area.',
+    2122,
+    'BDT',
+    4.5,
+    '["Instruments", "Makeup Room", "Instruments", "Mixing Console", "Changing Room"]',
+    '["https://example.com/images/studio8_1.jpg", "https://example.com/images/studio8_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 9: Gulshan Recording Studio 9
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.828405, 90.3222);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('11:00:00', '20:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801331158597', 'studio9@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Uttara', 'House 62, Road 13, Mirpur, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Gulshan Recording Studio 9',
+    'Recording Studio',
+    'A popular Recording Studio studio in Banani area.',
+    2675,
+    'BDT',
+    4.9,
+    '["Mixing Console", "Makeup Room", "Backdrop Options"]',
+    '["https://example.com/images/studio9_1.jpg", "https://example.com/images/studio9_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 10: Shyamoli Recording Studio 10
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.875281, 90.444466);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('09:00:00', '23:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801742590091', 'studio10@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Gulshan', 'House 35, Road 11, Gulshan, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Shyamoli Recording Studio 10',
+    'Photography',
+    'A popular Rehearsal Space studio in Gulshan area.',
+    2958,
+    'BDT',
+    3.8,
+    '["Changing Room", "Props", "Makeup Room", "Makeup Room", "Wi-Fi"]',
+    '["https://example.com/images/studio10_1.jpg", "https://example.com/images/studio10_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 11: Badda Recording Studio 11
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.863618, 90.459842);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('10:00:00', '19:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801329818155', 'studio11@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Badda', 'House 89, Road 9, Banani, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Badda Recording Studio 11',
+    'Art Studio',
+    'A popular Art Studio studio in Dhanmondi area.',
+    2923,
+    'BDT',
+    3.9,
+    '["Wi-Fi", "Soundproofing", "Wi-Fi"]',
+    '["https://example.com/images/studio11_1.jpg", "https://example.com/images/studio11_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 12: Mohammadpur Photography 12
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.721903, 90.35614);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('10:00:00', '23:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801634085620', 'studio12@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Dhanmondi', 'House 57, Road 8, Mirpur, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Mohammadpur Photography 12',
+    'Photography',
+    'A popular Photography studio in Mirpur area.',
+    1846,
+    'BDT',
+    3.8,
+    '["Props", "High-end Microphones", "Backdrop Options", "Backdrop Options", "Soundproofing"]',
+    '["https://example.com/images/studio12_1.jpg", "https://example.com/images/studio12_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 13: Banani Photography 13
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.751218, 90.346104);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('10:00:00', '23:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801950879018', 'studio13@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Mohammadpur', 'House 62, Road 13, Gulshan, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Banani Photography 13',
+    'Rehearsal Space',
+    'A popular Recording Studio studio in Uttara area.',
+    2308,
+    'BDT',
+    4.2,
+    '["Makeup Room", "Changing Room", "Lighting Equipment", "Instruments", "Makeup Room"]',
+    '["https://example.com/images/studio13_1.jpg", "https://example.com/images/studio13_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 14: Banani Rehearsal Space 14
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.797701, 90.41503);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('10:00:00', '18:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801667857122', 'studio14@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Banani', 'House 73, Road 10, Gulshan, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Banani Rehearsal Space 14',
+    'Recording Studio',
+    'A popular Rehearsal Space studio in Bashundhara area.',
+    2553,
+    'BDT',
+    3.5,
+    '["Instruments", "High-end Microphones", "Instruments", "Soundproofing"]',
+    '["https://example.com/images/studio14_1.jpg", "https://example.com/images/studio14_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 15: Badda Art Studio 15
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.863134, 90.484678);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('11:00:00', '23:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801316866239', 'studio15@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Shyamoli', 'House 7, Road 10, Dhanmondi, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Badda Art Studio 15',
+    'Photography',
+    'A popular Art Studio studio in Badda area.',
+    2841,
+    'BDT',
+    4.9,
+    '["Backdrop Options", "Lighting Equipment", "Changing Room", "Lighting Equipment"]',
+    '["https://example.com/images/studio15_1.jpg", "https://example.com/images/studio15_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 16: Shyamoli Rehearsal Space 16
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.863985, 90.359481);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('11:00:00', '23:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801544298355', 'studio16@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Shyamoli', 'House 93, Road 17, Bashundhara, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Shyamoli Rehearsal Space 16',
+    'Recording Studio',
+    'A popular Photography studio in Mohammadpur area.',
+    2124,
+    'BDT',
+    4.7,
+    '["High-end Microphones", "Mixing Console", "Soundproofing"]',
+    '["https://example.com/images/studio16_1.jpg", "https://example.com/images/studio16_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 17: Mirpur Recording Studio 17
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.837524, 90.484924);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('10:00:00', '23:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801536444293', 'studio17@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Dhanmondi', 'House 37, Road 20, Mirpur, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Mirpur Recording Studio 17',
+    'Photography',
+    'A popular Recording Studio studio in Shyamoli area.',
+    2737,
+    'BDT',
+    4.2,
+    '["Lighting Equipment", "Instruments", "Lighting Equipment"]',
+    '["https://example.com/images/studio17_1.jpg", "https://example.com/images/studio17_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 18: Banani Recording Studio 18
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.885392, 90.487327);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('10:00:00', '20:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801679772210', 'studio18@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Uttara', 'House 16, Road 14, Bashundhara, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Banani Recording Studio 18',
+    'Recording Studio',
+    'A popular Rehearsal Space studio in Banani area.',
+    2974,
+    'BDT',
+    4.7,
+    '["Instruments", "Instruments", "Makeup Room"]',
+    '["https://example.com/images/studio18_1.jpg", "https://example.com/images/studio18_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 19: Uttara Rehearsal Space 19
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.714579, 90.484963);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('09:00:00', '19:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801646238253', 'studio19@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Bashundhara', 'House 94, Road 14, Mirpur, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Uttara Rehearsal Space 19',
+    'Rehearsal Space',
+    'A popular Art Studio studio in Gulshan area.',
+    2704,
+    'BDT',
+    4.1,
+    '["Mixing Console", "Props", "Changing Room", "Props", "Wi-Fi"]',
+    '["https://example.com/images/studio19_1.jpg", "https://example.com/images/studio19_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 20: Badda Recording Studio 20
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.775212, 90.302565);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('08:00:00', '19:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801316316667', 'studio20@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Gulshan', 'House 3, Road 1, Shyamoli, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Badda Recording Studio 20',
+    'Art Studio',
+    'A popular Photography studio in Dhanmondi area.',
+    1991,
+    'BDT',
+    3.6,
+    '["Lighting Equipment", "Soundproofing", "Makeup Room"]',
+    '["https://example.com/images/studio20_1.jpg", "https://example.com/images/studio20_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 21: Banani Photography 21
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.830047, 90.408109);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('10:00:00', '19:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801799605231', 'studio21@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Mirpur', 'House 6, Road 1, Bashundhara, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Banani Photography 21',
+    'Photography',
+    'A popular Recording Studio studio in Mirpur area.',
+    2972,
+    'BDT',
+    4.2,
+    '["High-end Microphones", "Soundproofing", "Makeup Room", "Soundproofing"]',
+    '["https://example.com/images/studio21_1.jpg", "https://example.com/images/studio21_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 22: Badda Photography 22
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.873825, 90.40589);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('10:00:00', '23:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801489031665', 'studio22@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Bashundhara', 'House 45, Road 12, Banani, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Badda Photography 22',
+    'Photography',
+    'A popular Rehearsal Space studio in Uttara area.',
+    2066,
+    'BDT',
+    4.5,
+    '["Changing Room", "Makeup Room", "Lighting Equipment", "Wi-Fi", "Instruments"]',
+    '["https://example.com/images/studio22_1.jpg", "https://example.com/images/studio22_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 23: Dhanmondi Art Studio 23
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.843212, 90.437043);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('11:00:00', '18:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801680384124', 'studio23@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Bashundhara', 'House 33, Road 18, Dhanmondi, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Dhanmondi Art Studio 23',
+    'Recording Studio',
+    'A popular Art Studio studio in Bashundhara area.',
+    1909,
+    'BDT',
+    4.7,
+    '["Makeup Room", "High-end Microphones", "Props"]',
+    '["https://example.com/images/studio23_1.jpg", "https://example.com/images/studio23_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 24: Dhanmondi Photography 24
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.736992, 90.426783);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('11:00:00', '18:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801939035803', 'studio24@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Dhanmondi', 'House 23, Road 7, Dhanmondi, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Dhanmondi Photography 24',
+    'Photography',
+    'A popular Photography studio in Badda area.',
+    2281,
+    'BDT',
+    4.2,
+    '["Backdrop Options", "Instruments", "High-end Microphones", "Changing Room", "Props"]',
+    '["https://example.com/images/studio24_1.jpg", "https://example.com/images/studio24_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 25: Shyamoli Rehearsal Space 25
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.78254, 90.444809);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('11:00:00', '21:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801511461459', 'studio25@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Bashundhara', 'House 51, Road 12, Dhanmondi, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Shyamoli Rehearsal Space 25',
+    'Photography',
+    'A popular Recording Studio studio in Mohammadpur area.',
+    1659,
+    'BDT',
+    3.8,
+    '["High-end Microphones", "Changing Room", "Soundproofing"]',
+    '["https://example.com/images/studio25_1.jpg", "https://example.com/images/studio25_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 26: Dhanmondi Recording Studio 26
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.894207, 90.477061);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('08:00:00', '21:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801432667140', 'studio26@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Dhanmondi', 'House 65, Road 4, Mirpur, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Dhanmondi Recording Studio 26',
+    'Recording Studio',
+    'A popular Rehearsal Space studio in Shyamoli area.',
+    2821,
+    'BDT',
+    3.9,
+    '["Props", "Soundproofing", "Wi-Fi", "Soundproofing", "High-end Microphones"]',
+    '["https://example.com/images/studio26_1.jpg", "https://example.com/images/studio26_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+---
+-- Insert Data for Studio 27: Mohammadpur Art Studio 27
+INSERT INTO [dbo].[Coordinates] ([Latitude], [Longitude]) VALUES (23.756098, 90.351212);
+SELECT @lastCoordinatesId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Availability] ([OpenTime], [CloseTime]) VALUES ('09:00:00', '20:00:00');
+SELECT @lastAvailabilityId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Contact] ([Phone], [Email]) VALUES ('+8801697603555', 'studio27@example.com');
+SELECT @lastContactId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Location] ([City], [Area], [Address], [CoordinatesId]) VALUES ('Dhaka', 'Mirpur', 'House 38, Road 17, Bashundhara, Dhaka', @lastCoordinatesId);
+SELECT @lastLocationId = SCOPE_IDENTITY();
+INSERT INTO [dbo].[Studio] ([Name], [Type], [Description], [PricePerHour], [Currency], [Rating], [Amenities], [Images], [LocationId], [ContactId], [AvailabilityId])
+VALUES (
+    'Mohammadpur Art Studio 27',
+    'Art Studio',
+    'A popular Art Studio studio in Banani area.',
+    2790,
+    'BDT',
+    4.1,
+    '["High-end Microphones", "Soundproofing", "Props"]',
+    '["https://example.com/images/studio27_1.jpg", "https://example.com/images/studio27_2.jpg"]',
+    @lastLocationId,
+    @lastContactId,
+    @lastAvailabilityId
+);
+SELECT @lastStudioId = SCOPE_IDENTITY();
+
+-- Commit the transaction if all inserts were successful
+COMMIT TRANSACTION;
+
+PRINT 'Studio data seeding complete!';

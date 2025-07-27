@@ -1,0 +1,71 @@
+﻿CREATE TABLE [dbo].[Coordinates] (
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [Latitude] NUMERIC(10, 8) NOT NULL,
+    [Longitude] NUMERIC(11, 8) NOT NULL,
+    CONSTRAINT [PK_Coordinates] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Location] (
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [City] VARCHAR(100),
+    [Area] VARCHAR(100),
+    [Address] NVARCHAR(MAX), -- Use NVARCHAR(MAX) for potentially long addresses
+    [CoordinatesId] INT,
+    CONSTRAINT [PK_Location] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Location_Coordinates] FOREIGN KEY ([CoordinatesId]) REFERENCES [dbo].[Coordinates]([Id])
+);
+
+CREATE TABLE [dbo].[Contact] (
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [Phone] VARCHAR(50),
+    [Email] VARCHAR(255),
+    CONSTRAINT [PK_Contact] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Availability] (
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [OpenTime] TIME(0) NOT NULL, -- TIME(0) for no fractional seconds
+    [CloseTime] TIME(0) NOT NULL,
+    CONSTRAINT [PK_Availability] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Studio] (
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [Name] VARCHAR(255) NOT NULL,
+    [Type] VARCHAR(100),
+    [Description] NVARCHAR(MAX),
+    [PricePerHour] NUMERIC(10, 2),
+    [Currency] VARCHAR(10),
+    [Rating] NUMERIC(2, 1),
+    [Amenities] NVARCHAR(MAX), -- Store as JSON string, e.g., '["Instruments", "Wi-Fi"]'
+    [Images] NVARCHAR(MAX),    -- Store as JSON string, e.g., '["url1", "url2"]'
+    [LocationId] INT,
+    [ContactId] INT,
+    [AvailabilityId] INT,
+    CONSTRAINT [PK_Studio] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Studio_Location] FOREIGN KEY ([LocationId]) REFERENCES [dbo].[Location]([Id]),
+    CONSTRAINT [FK_Studio_Contact] FOREIGN KEY ([ContactId]) REFERENCES [dbo].[Contact]([Id]),
+    CONSTRAINT [FK_Studio_Availability] FOREIGN KEY ([AvailabilityId]) REFERENCES [dbo].[Availability]([Id])
+);
+
+------------------------------------------
+CREATE TABLE [dbo].[Booking] (
+    [Id] INT IDENTITY(1,1) NOT NULL,
+    [StudioId] INT NOT NULL,
+    [UserName] VARCHAR(255) NOT NULL,
+    [Email] VARCHAR(255),
+    [BookingDate] DATE NOT NULL,
+    [TimeSlot] VARCHAR(100) NOT NULL, -- Example: '09:00-10:00'
+    CONSTRAINT [PK_Booking] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Booking_Studio] FOREIGN KEY ([StudioId]) REFERENCES [dbo].[Studio]([Id])
+);
+
+
+--------------------------------------
+{
+  "studioId": 1,                   
+  "bookingDate": "2025-07-28",     
+  "timeSlot": "09:00-10:00",      
+  "userName": "jannatul baki",
+  "email": "baki@gmail.com"  
+}

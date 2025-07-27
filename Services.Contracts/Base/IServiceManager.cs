@@ -3,6 +3,6 @@
 namespace Services.Contracts.Base;
 public interface IServiceManager
 {
-    public ICategoryService Category { get; }
-    public ISubCategoryService SubCategory { get; }
+    public IStudioService Studio { get; }
+    public IBookingService Booking { get; }
 }

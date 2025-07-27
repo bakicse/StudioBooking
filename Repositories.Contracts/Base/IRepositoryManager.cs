@@ -3,6 +3,6 @@
 namespace Repositories.Contracts.Base;
 public interface IRepositoryManager
 {
-    public ICategoryRepository Category { get; }
-    public ISubCategoryRepository SubCategory { get; }
+    public IStudioRepository Studio { get; }
+    public IBookingRepository Booking { get; }
 }

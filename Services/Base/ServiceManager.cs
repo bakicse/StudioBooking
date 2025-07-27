@@ -13,8 +13,9 @@ public class ServiceManager(IRepositoryManager repository,
     IConfiguration configuration,
     ILogger logger) : IServiceManager
 {
-    private readonly Lazy<ICategoryService> _categoryService = new(() => new CategoryService(repository,configuration, mapper, logger));
-    private readonly Lazy<ISubCategoryService> _subCategoryService= new(() => new SubCategoryService(repository,configuration, mapper, logger));
-    public ICategoryService Category => _categoryService.Value;
-    public ISubCategoryService SubCategory => _subCategoryService.Value;
+   private readonly Lazy<IBookingService> _bookingService= new(() => new BookingService(repository,configuration, mapper, logger));
+    private readonly Lazy<IStudioService> _studioService= new(() => new StudioService(repository,configuration, mapper, logger));
+    
+    public IBookingService Booking => _bookingService.Value;
+    public IStudioService Studio => _studioService.Value;
 }

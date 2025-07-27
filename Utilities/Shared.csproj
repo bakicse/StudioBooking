@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="DTOs\InitDTOs\" />
+    <Folder Include="DTOs\ViewModels\" />
     <Folder Include="Enums\" />
   </ItemGroup>
 

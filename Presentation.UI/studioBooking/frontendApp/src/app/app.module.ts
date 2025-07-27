@@ -5,10 +5,10 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { StudioListComponent } from './studio-list/studio-list.component';
-import { StudioDetailComponent } from './studio-detail/studio-detail.component';
-import { BookingListComponent } from './booking-list/booking-list.component';
-import { BookingFormComponent } from './booking-form/booking-form.component';
+import { StudioListComponent } from './component/studio-list/studio-list.component';
+import { StudioDetailComponent } from './component/studio-detail/studio-detail.component';
+import { BookingListComponent } from './component/booking-list/booking-list.component';
+import { BookingFormComponent } from './component/booking-form/booking-form.component';
 
 @NgModule({
   declarations: [

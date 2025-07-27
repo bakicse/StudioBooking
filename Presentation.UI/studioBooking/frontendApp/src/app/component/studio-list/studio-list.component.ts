@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
-import { Studio } from '../models/studio.model';
+import { ApiService } from '../../services/api.service';
+import { Studio } from '../../models/studio.model';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-studio-list',
   templateUrl: './studio-list.component.html',
-  styleUrls: ['./studio-list.component.css']
+  styleUrls: ['./studio-list.component.css'],
+  standalone: false,
 })
 export class StudioListComponent implements OnInit {
   studios: Studio[] = [];

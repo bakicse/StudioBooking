@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
-import { Booking } from '../models/booking.model'; // Assuming models are in booking.model.ts
+import { ApiService } from '../../services/api.service';
+import { Booking } from '../../models/booking.model'; // Assuming models are in booking.model.ts
 
 @Component({
   selector: 'app-booking-list',
   templateUrl: './booking-list.component.html',
-  styleUrls: ['./booking-list.component.css']
+  styleUrls: ['./booking-list.component.css'],
+  standalone: false,
 })
 export class BookingListComponent implements OnInit {
   bookings: Booking[] = [];

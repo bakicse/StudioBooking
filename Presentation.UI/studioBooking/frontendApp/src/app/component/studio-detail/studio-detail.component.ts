@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from '../services/api.service';
-import { Studio, AvailableTimeSlot } from '../models/studio.model';
-import { Booking } from '../models/booking.model'; // Import Booking model
+import { ApiService } from '../../services/api.service';
+import { Studio } from '../../models/studio.model';
+import { Booking, AvailableTimeSlot} from '../../models/booking.model'; // Import Booking model
 
 @Component({
   selector: 'app-studio-detail',
   templateUrl: './studio-detail.component.html',
-  styleUrls: ['./studio-detail.component.css']
+  styleUrls: ['./studio-detail.component.css'],
+  standalone: false,
 })
 export class StudioDetailComponent implements OnInit {
   studio: Studio | undefined;

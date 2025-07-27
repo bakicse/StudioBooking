@@ -1,24 +1,77 @@
-<form (ngSubmit)="onSubmit()" class="space-y-4">
-  <div>
-    <label for="userName" class="block text-sm font-medium text-gray-700">Your Name</label>
-    <input type="text" id="userName" [(ngModel)]="userName" name="userName" required
-           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
-  </div>    
-  <div>
-    <label for="email" class="block text-sm font-medium text-gray-700">Your Email</label>
-    <input type="email" id="email" [(ngModel)]="email" name="email" required
-           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+<div class="container mx-auto p-4 bg-white shadow-lg rounded-lg my-8">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+    {{ studioId ? 'Confirm Booking' : 'Create New Booking' }}
+  </h1>
+
+  <div *ngIf="formErrorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+    <strong class="font-bold">Error!</strong>
+    <span class="block sm:inline"> {{ formErrorMessage }}</span>
   </div>
 
-  <div class="flex gap-4">
-    <button type="submit" [disabled]="loading"
-            class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out shadow-md">
-      <span *ngIf="!loading">Confirm Booking</span>
-      <span *ngIf="loading">Booking...</span>
-    </button>
-    <button type="button" (click)="onCancel()" [disabled]="loading"
-            class="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition duration-150 ease-in-out shadow-md">
-      Cancel
-    </button>
-  </div>
-</form>
+  <form (ngSubmit)="onSubmit()" class="space-y-4">
+
+    <!-- Studio Selection (only if not passed as Input) -->
+    <div *ngIf="!studioId">
+      <label for="studioSelect" class="block text-sm font-medium text-gray-700">Select Studio</label>
+      <select id="studioSelect" [(ngModel)]="selectedStudioId" name="selectedStudioId" (change)="onStudioChange()" required
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+        <option [ngValue]="undefined" disabled>-- Select a Studio --</option>
+        <option *ngFor="let studio of studios" [ngValue]="studio.id">{{ studio.name }} ({{ studio.location.area }})</option>
+      </select>
+    </div>
+
+    <!-- Booking Date Selection (only if not passed as Input) -->
+    <div *ngIf="!bookingDate">
+      <label for="bookingDate" class="block text-sm font-medium text-gray-700">Booking Date</label>
+      <input type="date" id="bookingDate" [(ngModel)]="selectedBookingDate" name="selectedBookingDate" (change)="onDateChange()" required
+             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+    </div>
+    <div *ngIf="availabilityLoading" class="text-center text-indigo-600 text-sm my-2">Checking availability...</div>
+    <div *ngIf="!availabilityLoading && availableTimeSlots.length === 0 && selectedStudioId && selectedBookingDate && !formErrorMessage" class="text-center text-gray-600 text-sm my-2">
+      No available slots for {{ selectedBookingDate }}.
+    </div>
+
+    <!-- Time Slot Selection (only if not passed as Input) -->
+    <div *ngIf="!timeSlot && availableTimeSlots.length > 0">
+      <label for="timeSlotSelect" class="block text-sm font-medium text-gray-700">Select Time Slot</label>
+      <select id="timeSlotSelect" [(ngModel)]="selectedTimeSlotForDirectBooking" name="selectedTimeSlotForDirectBooking" required
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+        <option [ngValue]="undefined" disabled>-- Select a Time Slot --</option>
+        <option *ngFor="let slot of availableTimeSlots" [ngValue]="slot.startTime.slice(0,5) + '-' + slot.endTime.slice(0,5)">
+          {{ slot.startTime | slice:0:5 }} - {{ slot.endTime | slice:0:5 }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Display selected slot if inputs are provided -->
+    <div *ngIf="studioId && bookingDate && timeSlot" class="bg-blue-50 p-3 rounded-md">
+        <p class="text-gray-700"><strong>Studio ID:</strong> {{ studioId }}</p>
+        <p class="text-gray-700"><strong>Booking Date:</strong> {{ bookingDate }}</p>
+        <p class="text-gray-700"><strong>Time Slot:</strong> {{ timeSlot }}</p>
+    </div>
+
+
+    <div>
+      <label for="userName" class="block text-sm font-medium text-gray-700">Your Name</label>
+      <input type="text" id="userName" [(ngModel)]="userName" name="userName" required
+             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+    </div>
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700">Your Email</label>
+      <input type="email" id="email" [(ngModel)]="email" name="email" required
+             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2">
+    </div>
+
+    <div class="flex gap-4">
+      <button type="submit" [disabled]="loading || !selectedStudioId || !selectedBookingDate || !selectedTimeSlotForDirectBooking"
+              class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out shadow-md">
+        <span *ngIf="!loading">Confirm Booking</span>
+        <span *ngIf="loading">Booking...</span>
+      </button>
+      <button type="button" (click)="onCancel()" [disabled]="loading"
+              class="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition duration-150 ease-in-out shadow-md">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

@@ -5,7 +5,7 @@ using Shared.DTOs.MainDTOs;
 namespace Presentation.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/Studios")]
 public class StudiosController(IServiceManager service) : ControllerBase
 {
     [HttpGet]

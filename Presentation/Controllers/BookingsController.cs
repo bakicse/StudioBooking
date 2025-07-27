@@ -5,7 +5,7 @@ using Shared.DTOs.MainDTOs;
 namespace Presentation.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/Bookings")]
 public class BookingsController(IServiceManager service) : ControllerBase
 {
     [HttpPost]

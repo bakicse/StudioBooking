@@ -79,6 +79,7 @@ export class ApiService {
    * GET /api/bookings - Get all bookings
    */
   getAllBookings(): Observable<Booking[]> {
-    return this.http.get<Booking[]>(`${this.apiUrl}/api/bookings`);
+    var result =  this.http.get<Booking[]>(`${this.apiUrl}/api/bookings`);
+    return result;
   }
 }

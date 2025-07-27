@@ -1,0 +1,38 @@
+<div class="container mx-auto p-4 bg-white shadow-lg rounded-lg my-8">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">All Bookings</h1>
+
+  <div *ngIf="loading" class="text-center text-indigo-600 text-lg my-4">Loading bookings...</div>
+  <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+    <strong class="font-bold">Error!</strong>
+    <span class="block sm:inline"> {{ errorMessage }}</span>
+  </div>
+
+  <div *ngIf="bookings.length === 0 && !loading && !errorMessage" class="text-center text-gray-600 text-lg my-4">
+    No bookings found.
+  </div>
+
+  <div *ngIf="bookings.length > 0" class="overflow-x-auto">
+    <table class="min-w-full bg-white rounded-lg shadow-md">
+      <thead class="bg-gray-100 border-b border-gray-200">
+        <tr>
+          <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tl-lg">ID</th>
+          <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Studio</th>
+          <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+          <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time Slot</th>
+          <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User Name</th>
+          <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tr-lg">Email</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr *ngFor="let booking of bookings" class="hover:bg-gray-50 transition duration-150 ease-in-out">
+          <td class="py-4 px-6 whitespace-nowrap text-sm font-medium text-gray-900">{{ booking.id }}</td>
+          <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700">{{ booking.studioName }}</td>
+          <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700">{{ booking.bookingDate | date:'mediumDate' }}</td>
+          <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700">{{ booking.timeSlot }}</td>
+          <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700">{{ booking.userName }}</td>
+          <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700">{{ booking.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

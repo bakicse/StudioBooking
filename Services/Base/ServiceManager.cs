@@ -5,7 +5,6 @@ using Serilog;
 using Services.Concretes.ServiceInfrastructure;
 using Services.Contracts.Base;
 using Services.Contracts.ServiceInterfaces;
-using Shared.Cryptography;
 
 namespace Services.Concretes.Base;
 public class ServiceManager(IRepositoryManager repository,

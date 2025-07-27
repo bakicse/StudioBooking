@@ -1,6 +1,5 @@
 using Application.ConfigureServices;
 using Application.Middleware;
-using Domain.Data;
 using Presentation.API;
 using Serilog;
 using Services.Concretes.AutoMapper;

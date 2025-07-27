@@ -2,7 +2,6 @@
 using Repositories.Concretes.RepositoryInfrastructure;
 using Repositories.Contracts.Base;
 using Repositories.Contracts.RepositoryInterfaces;
-using Shared.Cryptography;
 
 namespace Repositories.Concretes.Base;
 public sealed class RepositoryManager(AppDbContext context) : IRepositoryManager

@@ -2,14 +2,8 @@
 using Domain.Models;
 using Microsoft.Extensions.Configuration;
 using Repositories.Contracts.Base;
-using Repositories.Contracts.RepositoryInterfaces;
 using Services.Contracts.ServiceInterfaces;
 using Shared.DTOs.MainDTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Concretes.ServiceInfrastructure;
 public class StudioService(IRepositoryManager repository,

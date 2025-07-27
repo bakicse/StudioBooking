@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shared.DTOs.MainDTOs;
+﻿namespace Shared.DTOs.MainDTOs;
 public class LocationDto
 {
     public string City { get; set; }

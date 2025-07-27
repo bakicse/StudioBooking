@@ -1,5 +1,4 @@
-﻿using Domain.DEMODATA;
-using Domain.Models;
+﻿using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 #pragma warning disable CS8618
@@ -20,8 +19,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public virtual DbSet<Studio> Studios { get; set; }
 
 
-    public virtual DbSet<Category> Categories { get; set; }
-    public virtual DbSet<SubCategory> SubCategories { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -117,25 +114,5 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .HasConstraintName("FK_Studio_Location");
         });
         
-        modelBuilder.Entity<Category>(entity =>
-        {
-            entity.ToTable("Category");
-
-            entity.Property(e => e.CategoryName).HasMaxLength(100).IsUnicode(false);
-        });
-        modelBuilder.Entity<SubCategory>(entity =>
-        {
-            entity.ToTable("SubCategory");
-
-            entity.Property(e => e.SubCategoryName).HasMaxLength(100).IsUnicode(false);
-
-            entity.HasOne(d => d.Category)
-                .WithMany(p => p.SubCategories)
-                .HasForeignKey(d => d.CategoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_SubCategory_Category");
-        });
-
-
     }
 }

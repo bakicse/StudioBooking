@@ -7,7 +7,6 @@ public class ModelMappingProfile : Profile
 {
     public ModelMappingProfile()
     {
-        CreateMap<CategoryDto, Category>();
-        CreateMap<SubCategoryDto, SubCategory>();
+        
     }
 }

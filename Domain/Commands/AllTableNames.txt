@@ -1,0 +1,8 @@
+﻿Category, subcategory
+
+
+CREATE NONCLUSTERED INDEX IX_Category_CategoryName
+ON Category (CategoryName);
+
+CREATE NONCLUSTERED INDEX IX_SubCategory_SubCategoryName
+ON SubCategory (SubCategoryName);
